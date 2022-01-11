@@ -1,0 +1,20 @@
+.playground{
+	position: relative;
+	min-height: 450px;
+	
+}
+.playground-content > div{
+	min-height: 450px;	
+}
+.playground-controller{
+	position: absolute;
+	z-index: 999;
+	right: 0;
+	top: 0;
+}
+.playground-rerun{
+	position: absolute;
+	z-index: 999;
+	right: 0;
+	bottom: 0;
+}
