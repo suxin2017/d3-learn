@@ -6,9 +6,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
+  title: 'Learn D3',
   tagline: 'Dinosaurs are cool',
-  url: 'https://suxin2017.github.io/',
+  url: 'https://suxin2017.cn/',
   baseUrl: '/d3-learn/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
