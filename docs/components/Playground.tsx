@@ -1,7 +1,10 @@
 import React from "react";
-import * as dat from "dat.gui";
+
 import "./Playground.css";
 import { select } from "d3";
+import BrowserOnly from "@docusaurus/BrowserOnly";
+import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
+import useIsBrowser from "@docusaurus/useIsBrowser";
 
 interface IPlaygroundProps {
   demoFn: (gui: dat.GUI, playgroundId: string, reRun: HTMLDivElement) => void;
@@ -43,25 +46,27 @@ const Playground: React.FC<IPlaygroundProps> = ({ demoFn }) => {
   const reRun = React.useRef<HTMLDivElement>();
   const [divId, setUuid] = React.useState("");
   const [clean, setClean] = React.useState(false);
+  const isBrowser = useIsBrowser();
 
   React.useEffect(() => {
-    if (clean === false) {
-      const gui = new dat.GUI({ autoPlace: false });
-      playgroundController.current?.appendChild(gui.domElement);
-      const uid = uuid();
-      setUuid(uid);
-      setTimeout(() => demoFn(gui, `#${uid}`, reRun.current));
-    }
-  }, [clean]);
+      if (clean === false && isBrowser) {
+        const dat = require("dat.gui");
+        const gui = new dat.GUI({ autoPlace: false });
+        playgroundController.current?.appendChild(gui.domElement);
+        const uid = uuid();
+        setUuid(uid);
+        setTimeout(() => demoFn(gui, `#${uid}`, reRun.current));
+      }
+  }, [clean, isBrowser]);
 
   React.useEffect(() => {
-    if (clean) {
+    if (clean && isBrowser) {
       select(`#${divId}`).html("");
       setTimeout(() => {
         setClean(false);
       });
     }
-  }, [clean, divId]);
+  }, [clean, divId, isBrowser]);
   return (
     <div className="playground">
       <div className="playground-content">
@@ -80,4 +85,6 @@ const Playground: React.FC<IPlaygroundProps> = ({ demoFn }) => {
     </div>
   );
 };
-export default Playground;
+export default (args) => (
+  <BrowserOnly>{() => <Playground {...args} />}</BrowserOnly>
+);

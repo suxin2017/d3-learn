@@ -8,6 +8,7 @@ import d3, {
   scaleLinear,
   select,
 } from "d3";
+import type dat from "dat.gui";
 
 function simpleBar(gui: dat.GUI, demoId: string) {
   // gui.add({animationType:''},s)
